@@ -1,0 +1,2 @@
+automata_lib==3.1.0.post1
+automata==0.1.4
