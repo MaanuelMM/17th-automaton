@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
-# Authors:      Manuel Martín Malagón, Eduardo Marqués De La Fuente, José Carlos Gago Hernández
+# Authors:      Caleb Evans
 # Created:      2019/02/27
 # Last update:  2019/02/27
+
+# Copyright 2016-2019 Caleb Evans
 """Exception classes shared by all finite automata."""
 
 
