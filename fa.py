@@ -17,7 +17,7 @@ class FA(metaclass=abc.ABCMeta):
     
     @abc.abstractmethod
     def validate(self):
-        """Return True if this automaton is internally consistent."""
+        """Return True if this finite automaton is internally consistent."""
         raise NotImplementedError
 
     def copy(self):
