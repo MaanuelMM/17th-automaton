@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 # Authors:      Caleb Evans
 # Created:      2019/02/27
-# Last update:  2019/02/27
+# Last update:  2019/02/28
 
 # Copyright 2016-2019 Caleb Evans
 """Classes and methods for working with deterministic finite automata."""
 
 import copy
-import itertools
 import queue
 
 import fa
