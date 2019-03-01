@@ -5,13 +5,14 @@
 # Created:      2019/02/27
 # Last update:  2019/03/01
 
-from af import AF
+from nfa import NFA
+from dfa import DFA
 
-def primer_AF():
-    return AF(
-        estados={'q0', 'q1', 'q2', 'q3', 'q4'},
-        alfabeto={'a', 'b', 'c'},
-        transiciones={
+def first_NFA():
+    return NFA(
+        states={'q0', 'q1', 'q2', 'q3', 'q4'},
+        input_symbols={'a', 'b', 'c'},
+        transitions={
             'q0': {
                 'a': {'q2'},
                 'b': {'q1', 'q2'},
@@ -38,15 +39,15 @@ def primer_AF():
                 'c': {'q2'}
             }
         },
-        estado_inicial='q0',
-        estados_finales={'q4'}
+        initial_state='q0',
+        final_states={'q4'}
     )
 
-def segundo_AF():
-    return AF(
-        estados={'S', 'A', 'B', 'C', 'D', 'E', 'F'},
-        alfabeto={'a', 'b', 'c'},
-        transiciones={
+def second_NFA():
+    return NFA(
+        states={'S', 'A', 'B', 'C', 'D', 'E', 'F'},
+        input_symbols={'a', 'b', 'c'},
+        transitions={
             'S': {
                 'a': {'A', 'D', 'F'},
                 'b': {'C', 'D', 'F'},
@@ -83,11 +84,29 @@ def segundo_AF():
                 'c': {}
             }
         },
-        estado_inicial='S',
-        estados_finales={'F'}
+        initial_state='S',
+        final_states={'F'}
     )
 
 
 if __name__ == "__main__":
-    primer_AF = primer_AF()
-    segundo_AF = segundo_AF()
+    first_DFA = DFA.from_nfa(first_NFA())
+    print(first_DFA.states)
+    print()
+    print(first_DFA.input_symbols)
+    print()
+    print(first_DFA.transitions)
+    print()
+    print(first_DFA.initial_state)
+    print()
+    print(first_DFA.final_states)
+    second_DFA = DFA.from_nfa(second_NFA())
+    print(second_DFA.states)
+    print()
+    print(second_DFA.input_symbols)
+    print()
+    print(second_DFA.transitions)
+    print()
+    print(second_DFA.initial_state)
+    print()
+    print(second_DFA.final_states)
