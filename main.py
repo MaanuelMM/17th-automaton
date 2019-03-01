@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
-# Authors:      Manuel Martín Malagón, Eduardo Marqués De La Fuente, José Carlos Gago Hernández
+# Authors:      Manuel Martín Malagón
+#               Eduardo Marqués De La Fuente
+#               José Carlos Gago Hernández
 # Created:      2019/02/27
-# Last update:  2019/02/27
+# Last update:  2019/03/01
 
 from nfa import NFA
 from dfa import DFA
@@ -11,11 +13,31 @@ def first_NFA():
         states={'q0', 'q1', 'q2', 'q3', 'q4'},
         input_symbols={'a', 'b', 'c'},
         transitions={
-            'q0': {'a': {'q2'}, 'b': {'q1', 'q2'}},
-            'q1': {'a': {'q1'}, 'b': {'q1'}, 'c': {'q1', 'q2'}},
-            'q2': {'a': {'q3'}, 'b': {'q2', 'q3'}},
-            'q3': {'a': {'q4'}, 'b': {'q2'}},
-            'q4': {'c': {'q2'}}
+            'q0': {
+                'a': {'q2'},
+                'b': {'q1', 'q2'},
+                'c': {}
+            },
+            'q1': {
+                'a': {'q1'},
+                'b': {'q1'},
+                'c': {'q1', 'q2'}
+            },
+            'q2': {
+                'a': {'q3'},
+                'b': {'q2', 'q3'},
+                'c': {}
+            },
+            'q3': {
+                'a': {'q4'},
+                'b': {'q2'},
+                'c': {}
+            },
+            'q4': {
+                'a': {},
+                'b': {},
+                'c': {'q2'}
+            }
         },
         initial_state='q0',
         final_states={'q4'}
@@ -26,13 +48,41 @@ def second_NFA():
         states={'S', 'A', 'B', 'C', 'D', 'E', 'F'},
         input_symbols={'a', 'b', 'c'},
         transitions={
-            'S': {'a': {'A', 'D', 'F'}, 'b': {'C', 'D', 'F'}},
-            'A': {},
-            'B': {'b': {'A', 'B', 'F'}},
-            'C': {},
-            'D': {'a': {'C'}, 'c': {'E'}},
-            'E': {'b': {'F'}},
-            'F': {}
+            'S': {
+                'a': {'A', 'D', 'F'},
+                'b': {'C', 'D', 'F'},
+                'c': {}
+            },
+            'A': {
+                'a': {},
+                'b': {},
+                'c': {}
+            },
+            'B': {
+                'a': {},
+                'b': {'A', 'B', 'F'},
+                'c': {}
+            },
+            'C': {
+                'a': {},
+                'b': {},
+                'c': {}
+            },
+            'D': {
+                'a': {'C'},
+                'b': {},
+                'c': {'E'}
+            },
+            'E': {
+                'a': {},
+                'b': {'F'},
+                'c': {}
+            },
+            'F': {
+                'a': {},
+                'b': {},
+                'c': {}
+            }
         },
         initial_state='S',
         final_states={'F'}
