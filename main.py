@@ -7,6 +7,7 @@
 
 from af import AF
 
+
 def primer_AF():
     return AF(
         estados={'q0', 'q1', 'q2', 'q3', 'q4'},
