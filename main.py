@@ -68,7 +68,21 @@ if __name__ == "__main__":
     primer_AF = primer_AF()
     segundo_AF = segundo_AF()
 
-    # TEST: Vemos cuáles son los estados accesibles
-    print(primer_AF._obtener_accesibles())
-    print(segundo_AF._obtener_accesibles())
+    # ¡¡¡INCOMPLETO!!!
+    primer_AF.convertir_a_afd()
+    segundo_AF.convertir_a_afd()
     
+    # Output del test
+    print("Primer AF:")
+    print("\nEstados: " + str(primer_AF.estados))
+    print("\nAlfabeto: " + str(primer_AF.alfabeto))
+    print("\nTransiciones: " + str(primer_AF.transiciones))
+    print("\nEstado inicial: " + str(primer_AF.estado_inicial))
+    print("\nEstados finales: " + str(primer_AF.estados_finales))
+
+    print("Segundo AF:")
+    print("\nEstados: " + str(segundo_AF.estados))
+    print("\nAlfabeto: " + str(segundo_AF.alfabeto))
+    print("\nTransiciones: " + str(segundo_AF.transiciones))
+    print("\nEstado inicial: " + str(segundo_AF.estado_inicial))
+    print("\nEstados finales: " + str(segundo_AF.estados_finales))

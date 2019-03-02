@@ -26,6 +26,7 @@ class AF:
     def _eliminar_transiciones_vacias(self):
         """Elimina las transiciones vacías del autómata finito."""
 
+
     # Completo
     def _obtener_accesibles_de_un_estado(self, estado):
         """Devuelve los estados accesibles de un estado dado."""
@@ -63,6 +64,36 @@ class AF:
         # Devolvemos la lista de estados visitados, es decir, que son accesibles
         return estados_visitados
 
+    # Completo
+    def _eliminar_estados_no_accesibles_de_transiciones(self):
+        """Eliminar los estados inaccesibles de las transiciones posibles."""
+        transiciones_nuevo = copy.deepcopy(self.transiciones)
+
+        for estado in self.transiciones:
+            # Si existe un estado en las transiciones que no está en los estados del AF,
+            # eliminamos todas las transiciones posibles desde este
+            if(estado not in self.estados):
+                transiciones_nuevo.pop(estado)
+
+        self.transiciones = transiciones_nuevo
+
+    # Completo
+    def _eliminar_estados_finales_no_accesibles(self):
+        """Elimina los estados finales que no son accesibles."""
+        estados_finales_nuevo = self.estados_finales.copy()
+
+        for estado in self.estados_finales:
+            if(estado not in self.estados):
+                estados_finales_nuevo.remove(estado)
+        
+        self.estados_finales = estados_finales_nuevo
+
+    # Completo
+    def _eliminar_estados_no_accesibles(self):
+        """Elimina los estados no accesibles del autómata finito."""
+        self._eliminar_estados_no_accesibles_de_transiciones()
+        self._eliminar_estados_finales_no_accesibles()
+
     # Incompleto
     def _obtener_coaccesibles(self):
         """Obtiene los estados co-accesibles del autómata finito."""
@@ -73,7 +104,8 @@ class AF:
         """Convierte el autómata finito a uno determinista."""
         # ¿Hace falta eliminar las transiciones vacías previamente?
         self.estados = self._obtener_accesibles()
-        # Algoritmo para ver qué estados son co-accesibles
+        self._eliminar_estados_no_accesibles()
+        # self._obtener_coaccesibles()
 
     # Completo
     def copy(self):
