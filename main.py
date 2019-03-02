@@ -14,7 +14,7 @@ def primer_AF():
         transiciones={
             'q0': {
                 'a': {'q2'},
-                'b': {'q1', 'q2'},
+                'b': {'q1', 'q2'}
             },
             'q1': {
                 'a': {'q1'},
