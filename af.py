@@ -30,10 +30,14 @@ class AF:
     def _obtener_accesibles_de_un_estado(self, estado):
         """Devuelve los estados accesibles de un estado dado."""
         accesibles_del_estado_dado = set()
+
+        # Comprobamos si existen transiciones del estado indicando
         if(estado in self.transiciones):
             for entrada in self.transiciones[estado]:
                 for estado_accesible in self.transiciones[estado][entrada]:
                     accesibles_del_estado_dado.add(estado_accesible)
+        
+        # Devolvemos los estados accesibles
         return accesibles_del_estado_dado
 
     # Completo
@@ -69,7 +73,7 @@ class AF:
         """Convierte el autómata finito a uno determinista."""
         # ¿Hace falta eliminar las transiciones vacías previamente?
         self.estados = self._obtener_accesibles()
-         # Algoritmo para ver qué estados son co-accesibles
+        # Algoritmo para ver qué estados son co-accesibles
 
     # Completo
     def copy(self):
