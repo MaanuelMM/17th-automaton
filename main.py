@@ -3,7 +3,7 @@
 #               Eduardo Marqués De La Fuente
 #               José Carlos Gago Hernández
 # Created:      2019/02/27
-# Last update:  2019/03/01
+# Last update:  2019/03/02
 
 from af import AF
 
@@ -15,7 +15,6 @@ def primer_AF():
             'q0': {
                 'a': {'q2'},
                 'b': {'q1', 'q2'},
-                'c': {}
             },
             'q1': {
                 'a': {'q1'},
@@ -25,16 +24,12 @@ def primer_AF():
             'q2': {
                 'a': {'q3'},
                 'b': {'q2', 'q3'},
-                'c': {}
             },
             'q3': {
                 'a': {'q4'},
                 'b': {'q2'},
-                'c': {}
             },
             'q4': {
-                'a': {},
-                'b': {},
                 'c': {'q2'}
             }
         },
@@ -50,37 +45,16 @@ def segundo_AF():
             'S': {
                 'a': {'A', 'D', 'F'},
                 'b': {'C', 'D', 'F'},
-                'c': {}
-            },
-            'A': {
-                'a': {},
-                'b': {},
-                'c': {}
             },
             'B': {
-                'a': {},
                 'b': {'A', 'B', 'F'},
-                'c': {}
-            },
-            'C': {
-                'a': {},
-                'b': {},
-                'c': {}
             },
             'D': {
                 'a': {'C'},
-                'b': {},
                 'c': {'E'}
             },
             'E': {
-                'a': {},
                 'b': {'F'},
-                'c': {}
-            },
-            'F': {
-                'a': {},
-                'b': {},
-                'c': {}
             }
         },
         estado_inicial='S',
@@ -89,5 +63,11 @@ def segundo_AF():
 
 
 if __name__ == "__main__":
+    # Creamos los autómatas finitos
     primer_AF = primer_AF()
     segundo_AF = segundo_AF()
+
+    # TEST: Vemos cuáles son los estados accesibles
+    print(primer_AF._obtener_accesibles())
+    print(segundo_AF._obtener_accesibles())
+    
