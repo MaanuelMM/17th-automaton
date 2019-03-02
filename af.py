@@ -29,22 +29,22 @@ class AF:
     # Completo
     def _obtener_accesibles_de_un_estado(self, estado):
         """Devuelve los estados accesibles de un estado dado."""
-        accesibles_del_estado_dado = []
+        accesibles_del_estado_dado = set()
         if(estado in self.transiciones):
             for entrada in self.transiciones[estado]:
                 for estado_accesible in self.transiciones[estado][entrada]:
-                    accesibles_del_estado_dado.append(estado_accesible)
+                    accesibles_del_estado_dado.add(estado_accesible)
         return accesibles_del_estado_dado
 
     # Completo
     def _obtener_accesibles(self):
         """Devuelve los estados accesibles del autómata finito."""
         # Declaramos variables a utilizar
-        estados_visitados = []
+        estados_visitados = set()
         cola_estados = queue.Queue()
 
         # Inicializamos las variables con las del estado inicial
-        estados_visitados.append(self.estado_inicial)
+        estados_visitados.add(self.estado_inicial)
         for estado_accesible in self._obtener_accesibles_de_un_estado(self.estado_inicial):
             cola_estados.put(estado_accesible)
 
@@ -52,7 +52,7 @@ class AF:
         while(not cola_estados.empty()):
             estado_cola = cola_estados.get()
             if(estado_cola not in estados_visitados):
-                estados_visitados.append(estado_cola)
+                estados_visitados.add(estado_cola)
                 for estado_accesible in self._obtener_accesibles_de_un_estado(estado_cola):
                     cola_estados.put(estado_accesible)
 
