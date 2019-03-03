@@ -66,7 +66,7 @@ class AF:
 
     # Completo
     def _eliminar_estados_no_accesibles_de_transiciones(self):
-        """Eliminar los estados inaccesibles de las transiciones posibles."""
+        """Eliminar los estados no accesibles de las transiciones posibles."""
         transiciones_nuevo = copy.deepcopy(self.transiciones)
 
         for estado in self.transiciones:
@@ -81,8 +81,35 @@ class AF:
         self.transiciones = transiciones_nuevo
 
     # Completo
-    def _eliminar_estados_finales_no_accesibles(self):
-        """Elimina los estados finales que no son accesibles."""
+    def _eliminar_estados_no_coaccesibles_de_transiciones(self):
+        """Eliminar los estados no co-accesibles de las transiciones posibles."""
+        transiciones_nuevo = copy.deepcopy(self.transiciones)
+
+        for estado in self.transiciones:
+            # Si existe un estado en las transiciones que no está en los estados del AF,
+            # eliminamos todas las transiciones posibles desde este
+            if(estado not in self.estados):
+                transiciones_nuevo.pop(estado)
+            # En el caso de que el estado visitado esté dentro de los estados posibles
+            # del AF, veremos si este transita a un estado que no exista en el AF
+            # (esta última parte se puede omitir si únicamente hemos eliminado los
+            # estados que no son accesibles, pero no los co-accesibles)
+            else:
+                for entrada in self.transiciones[estado]:
+                    for estado_accesible in self.transiciones[estado][entrada]:
+                        if(estado_accesible not in self.estados):
+                            transiciones_nuevo[estado][entrada].remove(estado_accesible)
+                    if(not transiciones_nuevo[estado][entrada]):
+                        transiciones_nuevo[estado].pop(entrada)
+                if(not transiciones_nuevo[estado]):
+                    transiciones_nuevo.pop(estado)
+
+        self.transiciones = transiciones_nuevo
+
+
+    # Completo
+    def _eliminar_estados_finales_no_existentes(self):
+        """Elimina los estados finales que no existen."""
         estados_finales_nuevo = self.estados_finales.copy()
 
         for estado in self.estados_finales:
@@ -95,7 +122,13 @@ class AF:
     def _eliminar_estados_no_accesibles(self):
         """Elimina los estados no accesibles del autómata finito."""
         self._eliminar_estados_no_accesibles_de_transiciones()
-        self._eliminar_estados_finales_no_accesibles()
+        self._eliminar_estados_finales_no_existentes()
+
+    # Completo
+    def _eliminar_estados_no_coaccesibles(self):
+        """Elimina los estados no co-accesibles del autómata finito."""
+        self._eliminar_estados_no_coaccesibles_de_transiciones()
+        self._eliminar_estados_finales_no_existentes()
 
     # Completo
     def _obtener_coaccesibles_de_un_estado(self, estado):
@@ -116,7 +149,7 @@ class AF:
         
         return coaccesibles_del_estado_dado
 
-    # Incompleto
+    # Completo
     def _obtener_coaccesibles(self):
         """Obtiene los estados co-accesibles del autómata finito."""
         # Declaramos e inicializamos variables a utilizar
@@ -141,9 +174,10 @@ class AF:
     def convertir_a_afd(self):
         """Convierte el autómata finito a uno determinista."""
         # ¿Hace falta eliminar las transiciones vacías previamente?
-        print(self._obtener_coaccesibles())
         self.estados = self._obtener_accesibles()
         self._eliminar_estados_no_accesibles()
+        self.estados = self._obtener_coaccesibles()
+        self._eliminar_estados_no_coaccesibles()
 
     # Completo
     def copy(self):
