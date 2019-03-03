@@ -3,7 +3,7 @@
 #               Eduardo Marqués De La Fuente
 #               José Carlos Gago Hernández
 # Created:      2019/02/28
-# Last update:  2019/03/02
+# Last update:  2019/03/03
 """Clases y métodos para trabajar con autómatas finitos."""
 
 import copy
@@ -74,6 +74,9 @@ class AF:
             # eliminamos todas las transiciones posibles desde este
             if(estado not in self.estados):
                 transiciones_nuevo.pop(estado)
+            # No contemplamos el caso en el que un estado existente pueda transitar a uno
+            # no existente, pues únicamente estamos eliminando aquellos estados que no son
+            # accesibles, y no los que no son co-accesibles
 
         self.transiciones = transiciones_nuevo
 
