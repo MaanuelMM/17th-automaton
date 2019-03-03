@@ -97,18 +97,53 @@ class AF:
         self._eliminar_estados_no_accesibles_de_transiciones()
         self._eliminar_estados_finales_no_accesibles()
 
+    # Completo
+    def _obtener_coaccesibles_de_un_estado(self, estado):
+        """Devuelve los estados co-accesibles de un estado dado."""
+        coaccesibles_del_estado_dado = set()
+
+        # https://stackoverflow.com/questions/6346492/how-to-stop-a-for-loop
+        # https://www.digitalocean.com/community/tutorials/how-to-use-break-continue-and-pass-statements-when-working-with-loops-in-python-3
+        for estado_transitable in self.transiciones:
+            for entrada in self.transiciones[estado_transitable]:
+                for estado_accesible in self.transiciones[estado_transitable][entrada]:
+                    if(estado_accesible == estado):
+                        coaccesibles_del_estado_dado.add(estado_transitable)
+                        break
+                else:
+                    continue
+                break
+        
+        return coaccesibles_del_estado_dado
+
     # Incompleto
     def _obtener_coaccesibles(self):
         """Obtiene los estados co-accesibles del autómata finito."""
+        # Declaramos e inicializamos variables a utilizar
+        estados_visitados = self.estados_finales.copy()
+        cola_estados = queue.Queue()
+        for estado_final in self.estados_finales:
+            for estado_coaccesible in self._obtener_coaccesibles_de_un_estado(estado_final):
+                cola_estados.put(estado_coaccesible)
 
+        # Realizamos bucle para obtener el resto de estados co-accesibles
+        while(not cola_estados.empty()):
+            estado_cola = cola_estados.get()
+            if(estado_cola not in estados_visitados):
+                estados_visitados.add(estado_cola)
+                for estado_coaccesible in self._obtener_coaccesibles_de_un_estado(estado_cola):
+                    cola_estados.put(estado_coaccesible)
+
+        # Devolvemos la lista de estados visitados, es decir, que son co-accesibles
+        return estados_visitados
 
     # Incompleto
     def convertir_a_afd(self):
         """Convierte el autómata finito a uno determinista."""
         # ¿Hace falta eliminar las transiciones vacías previamente?
+        print(self._obtener_coaccesibles())
         self.estados = self._obtener_accesibles()
         self._eliminar_estados_no_accesibles()
-        # self._obtener_coaccesibles()
 
     # Completo
     def copy(self):
