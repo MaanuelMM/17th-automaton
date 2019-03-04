@@ -41,7 +41,7 @@ class AF:
         # Retornamos los estados recorridos con transiciones vacías
         return estados_recorridos
 
-    # Incompleto
+    # Completo
     def _eliminar_transiciones_vacias(self):
         """Elimina las transiciones vacías del autómata finito."""
         for estado in self.transiciones:
