@@ -3,7 +3,7 @@
 #               Eduardo Marqués De La Fuente
 #               José Carlos Gago Hernández
 # Created:      2019/02/28
-# Last update:  2019/03/03
+# Last update:  2019/03/04
 """Clases y métodos para trabajar con autómatas finitos."""
 
 import copy
@@ -22,10 +22,40 @@ class AF:
         self.estado_inicial = estado_inicial
         self.estados_finales = estados_finales.copy()
 
+    # Completo
+    def _obtener_estados_transiciones_vacias(self, estado):
+        """Devuelve los estados recorridos desde un estado con transiciones vacías."""
+        # Declaramos variables a utilizar
+        pila = []
+        estados_recorridos = set()
+        pila.append(estado)
+        
+        # Realizamos bucle en busca de transiciones vacías del estado dado
+        while pila:
+            estado_pila = pila.pop()
+            if(estado_pila not in estados_recorridos):
+                estados_recorridos.add(estado_pila)
+                if('' in self.transiciones[estado_pila]):
+                    pila.extend(self.transiciones[estado_pila][''])
+
+        # Retornamos los estados recorridos con transiciones vacías
+        return estados_recorridos
+
     # Incompleto
     def _eliminar_transiciones_vacias(self):
         """Elimina las transiciones vacías del autómata finito."""
-
+        for estado in self.transiciones:
+            for estado_vacio in self._obtener_estados_transiciones_vacias(estado):
+                if(estado != estado_vacio and estado_vacio in self.transiciones):
+                    for entrada in self.transiciones[estado_vacio]:
+                        if(entrada != ''):
+                            if(entrada not in self.transiciones[estado]):
+                                self.transiciones[estado][entrada] = self.transiciones[estado_vacio][entrada].copy()
+                            else:
+                                for estado_entrada in self.transiciones[estado_vacio][entrada]:
+                                    self.transiciones[estado][entrada].add(estado_entrada)
+            if('' in self.transiciones[estado]):
+                self.transiciones[estado].pop('')
 
     # Completo
     def _obtener_accesibles_de_un_estado(self, estado):
@@ -174,10 +204,11 @@ class AF:
     def convertir_a_afd(self):
         """Convierte el autómata finito a uno determinista."""
         # ¿Hace falta eliminar las transiciones vacías previamente?
-        self.estados = self._obtener_accesibles()
-        self._eliminar_estados_no_accesibles()
-        self.estados = self._obtener_coaccesibles()
-        self._eliminar_estados_no_coaccesibles()
+        # self.estados = self._obtener_accesibles()
+        # self._eliminar_estados_no_accesibles()
+        # self.estados = self._obtener_coaccesibles()
+        # self._eliminar_estados_no_coaccesibles()
+        self._eliminar_transiciones_vacias()
 
     # Completo
     def copy(self):
