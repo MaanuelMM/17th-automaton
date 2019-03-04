@@ -42,22 +42,6 @@ class AF:
         return estados_recorridos
 
     # Completo
-    def _eliminar_transiciones_vacias(self):
-        """Elimina las transiciones vacías del autómata finito."""
-        for estado in self.transiciones:
-            for estado_vacio in self._obtener_estados_transiciones_vacias(estado):
-                if(estado != estado_vacio and estado_vacio in self.transiciones):
-                    for entrada in self.transiciones[estado_vacio]:
-                        if(entrada != ''):
-                            if(entrada not in self.transiciones[estado]):
-                                self.transiciones[estado][entrada] = self.transiciones[estado_vacio][entrada].copy()
-                            else:
-                                for estado_entrada in self.transiciones[estado_vacio][entrada]:
-                                    self.transiciones[estado][entrada].add(estado_entrada)
-            if('' in self.transiciones[estado]):
-                self.transiciones[estado].pop('')
-
-    # Completo
     def _obtener_accesibles_de_un_estado(self, estado):
         """Devuelve los estados accesibles de un estado dado."""
         accesibles_del_estado_dado = set()
