@@ -42,6 +42,63 @@ class AF:
         return estados_recorridos
 
     # Completo
+    @staticmethod
+    def _hacer_string_de_conjunto_estados(estados):
+        """Devuelve el conjunto de estados dado en forma de string."""
+        return '{{{}}}'.format(','.join(sorted(estados)))
+
+    # Completo
+    def _obtener_próximos_estados_de_conjunto(self, conjunto_estados, entrada):
+        """Devuelve el conjunto de próximos estados dado un cojunto de estados y una entrada."""
+        próximos_estados = set()
+
+        for estado in conjunto_estados:
+            if(entrada in self.transiciones[estado]):
+                próximos_estados.update(self.transiciones[estado].get(entrada))
+
+        return próximos_estados
+
+    # Completo
+    def _automata_accesible_determinista(self):
+        """Modifica el AF a uno determinista mediante el algoritmo de estados accesibles."""
+        # Declaramos e inicializamos las variables a utilizar
+        estados_nuevos = set()
+        transiciones_nuevas = {}
+        estado_inicial_nuevo = AF._hacer_string_de_conjunto_estados(self.estado_inicial)
+        estados_finales_nuevos = set()
+        estados_cola = set()
+        estados_cola.add(self.estado_inicial)
+        cola_estados = queue.Queue()
+        cola_estados.put(estados_cola)
+
+        # Realizamos bucle para obtener el resto de estados accesibles
+        while(not cola_estados.empty()):
+            estados_cola = cola_estados.get()
+            estado_cola = AF._hacer_string_de_conjunto_estados(estados_cola)
+            if(estado_cola not in estados_nuevos):
+                # Añadimos el nuevo conjunto de estados a los nuevos estados
+                estados_nuevos.add(estado_cola)
+                transiciones_nuevas[estado_cola] = {}
+                # Si está contenido en los estados finales del antiguo autómata,
+                # se añade al nuevo conjunto de estados finales
+                if(estados_cola & self.estados_finales):
+                    estados_finales_nuevos.add(estado_cola)
+                
+                # Encolar próximos estados a iterar
+                for entrada in self.alfabeto:
+                    próximos_estados = self._obtener_próximos_estados_de_conjunto(
+                        estados_cola, entrada)
+                    transiciones_nuevas[estado_cola][entrada] = (
+                        AF._hacer_string_de_conjunto_estados(próximos_estados))
+                    cola_estados.put(próximos_estados)
+        
+        # Asignamos los nuevos atributos
+        self.estados = estados_nuevos
+        self.transiciones = transiciones_nuevas
+        self.estado_inicial = estado_inicial_nuevo
+        self.estados_finales = estados_finales_nuevos
+
+    # Completo
     def _obtener_accesibles_de_un_estado(self, estado):
         """Devuelve los estados accesibles de un estado dado."""
         accesibles_del_estado_dado = set()
@@ -192,7 +249,7 @@ class AF:
         # self._eliminar_estados_no_accesibles()
         # self.estados = self._obtener_coaccesibles()
         # self._eliminar_estados_no_coaccesibles()
-        self._eliminar_transiciones_vacias()
+        self._automata_accesible_determinista()
 
     # Completo
     def copy(self):

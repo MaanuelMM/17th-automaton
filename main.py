@@ -47,16 +47,19 @@ def segundo_AF():
                 'a': {'A', 'D', 'F'},
                 'b': {'C', 'D', 'F'},
             },
+            'A': {},
             'B': {
                 'b': {'A', 'B', 'F'},
             },
+            'C': {},
             'D': {
                 'a': {'C'},
                 'c': {'E'}
             },
             'E': {
                 'b': {'F'},
-            }
+            },
+            'F': {}
         },
         estado_inicial='S',
         estados_finales={'F'}
