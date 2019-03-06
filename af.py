@@ -42,6 +42,22 @@ class AF:
         return estados_recorridos
 
     # Completo
+    def _eliminar_transiciones_vacias(self):
+        """Elimina las transiciones vacías del autómata finito."""
+        for estado in self.transiciones:
+            estados_vacios = self._obtener_estados_transiciones_vacias(estado)
+            estados_vacios.remove(estado)
+            for estado_vacio in estados_vacios:
+                for entrada in self.transiciones[estado_vacio]:
+                    if(entrada != ''):
+                        for estado_entrada in self.transiciones[estado_vacio][entrada]:
+                            self.transiciones[estado][entrada].add(estado_entrada)
+                if(estado_vacio in self.estados_finales):
+                    self.estados_finales.add(estado_vacio)
+            if('' in self.transiciones[estado]):
+                self.transiciones[estado].pop('')
+
+    # Completo
     @staticmethod
     def _hacer_string_de_conjunto_estados(estados):
         """Devuelve el conjunto de estados dado en forma de string."""
@@ -170,10 +186,10 @@ class AF:
                     for estado_accesible in self.transiciones[estado][entrada]:
                         if(estado_accesible not in self.estados):
                             transiciones_nuevo[estado][entrada].remove(estado_accesible)
-                    if(not transiciones_nuevo[estado][entrada]):
-                        transiciones_nuevo[estado].pop(entrada)
-                if(not transiciones_nuevo[estado]):
-                    transiciones_nuevo.pop(estado)
+                    #if(not transiciones_nuevo[estado][entrada]):
+                        #transiciones_nuevo[estado].pop(entrada)
+                #if(not transiciones_nuevo[estado]):
+                    #transiciones_nuevo.pop(estado)
 
         self.transiciones = transiciones_nuevo
 
@@ -244,12 +260,14 @@ class AF:
     # Incompleto
     def convertir_a_afd(self):
         """Convierte el autómata finito a uno determinista."""
-        # ¿Hace falta eliminar las transiciones vacías previamente?
+        self._eliminar_transiciones_vacias()
+        # DUDA: no sé si hay que eliminar los no coaccesibles antes o después
+        self._eliminar_estados_no_coaccesibles()
+        self._automata_accesible_determinista()
         # self.estados = self._obtener_accesibles()
         # self._eliminar_estados_no_accesibles()
         # self.estados = self._obtener_coaccesibles()
         # self._eliminar_estados_no_coaccesibles()
-        self._automata_accesible_determinista()
 
     # Completo
     def copy(self):
