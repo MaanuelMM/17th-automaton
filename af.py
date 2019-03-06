@@ -46,7 +46,9 @@ class AF:
         # Declaramos e inicializamos las variables a utilizar
         estados_nuevos = set()
         transiciones_nuevas = {}
-        estado_inicial_nuevo = AF._hacer_string_de_conjunto_estados(self.estado_inicial)
+        estado_inicial_set = set()
+        estado_inicial_set.add(self.estado_inicial)
+        estado_inicial_nuevo = AF._hacer_string_de_conjunto_estados(estado_inicial_set)
         estados_finales_nuevos = set()
         estados_cola = set()
         estados_cola.add(self.estado_inicial)
@@ -105,18 +107,18 @@ class AF:
         """Obtiene los estados co-accesibles del autómata finito."""
         # Declaramos e inicializamos variables a utilizar
         estados_visitados = self.estados_finales.copy()
-        cola_estados = queue.Queue()
+        set_estados = set()
         for estado_final in self.estados_finales:
             for estado_coaccesible in self._obtener_coaccesibles_de_un_estado(estado_final):
-                cola_estados.put(estado_coaccesible)
+                set_estados.add(estado_coaccesible)
 
         # Realizamos bucle para obtener el resto de estados co-accesibles
-        while(not cola_estados.empty()):
-            estado_cola = cola_estados.get()
-            if(estado_cola not in estados_visitados):
-                estados_visitados.add(estado_cola)
-                for estado_coaccesible in self._obtener_coaccesibles_de_un_estado(estado_cola):
-                    cola_estados.put(estado_coaccesible)
+        while(set_estados):
+            estado_set = set_estados.pop()
+            if(estado_set not in estados_visitados):
+                estados_visitados.add(estado_set)
+                for estado_coaccesible in self._obtener_coaccesibles_de_un_estado(estado_set):
+                    set_estados.add(estado_coaccesible)
 
         # Devolvemos la lista de estados visitados, es decir, que son co-accesibles
         return estados_visitados
@@ -144,23 +146,10 @@ class AF:
         self.transiciones = transiciones_nuevo
 
     # Completo
-    def _eliminar_estados_finales_no_existentes(self):
-        """Elimina los estados finales que no existen."""
-        estados_finales_nuevo = self.estados_finales.copy()
-
-        for estado in self.estados_finales:
-            if(estado not in self.estados):
-                estados_finales_nuevo.remove(estado)
-        
-        self.estados_finales = estados_finales_nuevo
-
-    # Completo
     def _eliminar_estados_no_coaccesibles(self):
         """Elimina los estados no co-accesibles del autómata finito."""
+        self.estados = self._obtener_coaccesibles()
         self._eliminar_estados_no_coaccesibles_de_transiciones()
-        # ¿Puede un estado ser final y a la vez co-accesible?
-        # Si fuera así, no debería de eliminarse, ¿verdad?
-        self._eliminar_estados_finales_no_existentes()
 
     # Completo
     def _obtener_estados_transiciones_vacias(self, estado):
