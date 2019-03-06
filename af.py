@@ -3,7 +3,7 @@
 #               Eduardo Marqués De La Fuente
 #               José Carlos Gago Hernández
 # Created:      2019/02/28
-# Last update:  2019/03/04
+# Last update:  2019/03/06
 """Clases y métodos para trabajar con autómatas finitos."""
 
 import copy
