@@ -121,8 +121,7 @@ def leer_y_convertir_automata():
     print("-----------------------------------------------ANTES------------------------------------------------")
     automata_finito.imprimir()
     print("----------------------------------------------DESPUÉS-----------------------------------------------")
-    automata_finito.convertir_17th_automaton()
-    automata_finito.imprimir()
+    automata_finito.convertir_a_17th_automaton().imprimir()
 
 def menu():
     banner()

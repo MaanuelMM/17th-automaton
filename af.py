@@ -191,7 +191,7 @@ class AF:
                 self.transiciones[estado].pop('')
 
     # Completo
-    def convertir_a_afd(self):
+    def _convertir_a_afd(self):
         """Convierte el autómata finito a uno determinista."""
         self._eliminar_transiciones_vacias()
         self._automata_accesible_determinista()
@@ -199,34 +199,37 @@ class AF:
 
     # Completo
     @staticmethod
-    def _cambiar_nombre_complementario_conjunto(conjunto, mensaje):
+    def _cambiar_nombre_complementario_conjunto(conjunto, texto):
+        """Cambia el nombre de un conjunto añadiendo un texto indicado."""
         conjunto_copia = conjunto.copy()
         conjunto_nuevo = set()
         while(conjunto_copia):
-            elemento = conjunto_copia.pop() + mensaje
+            elemento = conjunto_copia.pop() + texto
             conjunto_nuevo.add(elemento)
         return conjunto_nuevo
 
     # Completo
-    def _cambiar_nombre_complementario(self, mensaje="'"):
+    def _cambiar_nombre_complementario(self, texto="'"):
         """Cambia el nombre de los estados para reflejar que es complementario."""
         transiciones_nuevas = {}
         
         for estado in self.transiciones:
-            transiciones_nuevas[estado + mensaje] = {}
+            transiciones_nuevas[estado + texto] = {}
             for entrada in self.transiciones[estado]:
-                transiciones_nuevas[estado + mensaje][entrada] = (
+                transiciones_nuevas[estado + texto][entrada] = (
                     AF._cambiar_nombre_complementario_conjunto(
-                    self.transiciones[estado][entrada], mensaje))
+                    self.transiciones[estado][entrada], texto))
 
-        self.estados = AF._cambiar_nombre_complementario_conjunto(self.estados, mensaje)
+        self.estados = AF._cambiar_nombre_complementario_conjunto(self.estados, texto)
         self.transiciones = transiciones_nuevas
-        self.estado_inicial += mensaje
-        self.estados_finales = AF._cambiar_nombre_complementario_conjunto(self.estados_finales, mensaje)
+        self.estado_inicial += texto
+        self.estados_finales = AF._cambiar_nombre_complementario_conjunto(self.estados_finales, texto)
 
     # Completo
-    def convertir_a_complementario(self):
-        """Convierte el autómata finito determinista completo a uno complementario."""
+    def _convertir_a_complementario(self):
+        """Convierte un autómata finito determinista completo a uno complementario.
+        
+        NOTA: DEBE SER UN AUTÓMATA FINITO DETERMINISTA Y COMPLETO."""
         nuevos_estados_finales = set()
 
         for estado in self.estados:
@@ -235,6 +238,25 @@ class AF:
 
         self.estados_finales = nuevos_estados_finales
         self._cambiar_nombre_complementario()
+
+    # Completo
+    def _multiplicar_con_su_complementario(self):
+        """Multiplica un autómata finito determinista completo con su complementario."""
+        complementario = self.copy()
+        complementario._convertir_a_complementario()
+        self.estados.update(complementario.estados)
+        self.transiciones.update(complementario.transiciones)
+        for estado_final in self.estados_finales:
+            self.transiciones[estado_final][''] = set()
+            self.transiciones[estado_final][''].add(complementario.estado_inicial)
+        self.estados_finales.update(complementario.estados_finales)
+
+    # Completo
+    def convertir_a_17th_automaton(self):
+        """Convertir el autómata dado a uno que cumpla con el enunciado del tema 17."""
+        self._convertir_a_afd()
+        self._multiplicar_con_su_complementario()
+        self._eliminar_transiciones_vacias()
 
     # Completo
     def imprimir(self):
