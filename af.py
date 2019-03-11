@@ -198,6 +198,33 @@ class AF:
         self._eliminar_estados_no_coaccesibles()
 
     # Completo
+    @staticmethod
+    def _cambiar_nombre_complementario_conjunto(conjunto, mensaje):
+        conjunto_copia = conjunto.copy()
+        conjunto_nuevo = set()
+        while(conjunto_copia):
+            elemento = conjunto_copia.pop() + mensaje
+            conjunto_nuevo.add(elemento)
+        return conjunto_nuevo
+
+    # Completo
+    def _cambiar_nombre_complementario(self, mensaje="'"):
+        """Cambia el nombre de los estados para reflejar que es complementario."""
+        transiciones_nuevas = {}
+        
+        for estado in self.transiciones:
+            transiciones_nuevas[estado + mensaje] = {}
+            for entrada in self.transiciones[estado]:
+                transiciones_nuevas[estado + mensaje][entrada] = (
+                    AF._cambiar_nombre_complementario_conjunto(
+                    self.transiciones[estado][entrada], mensaje))
+
+        self.estados = AF._cambiar_nombre_complementario_conjunto(self.estados, mensaje)
+        self.transiciones = transiciones_nuevas
+        self.estado_inicial += mensaje
+        self.estados_finales = AF._cambiar_nombre_complementario_conjunto(self.estados_finales, mensaje)
+
+    # Completo
     def convertir_a_complementario(self):
         """Convierte el autómata finito determinista completo a uno complementario."""
         nuevos_estados_finales = set()
@@ -207,6 +234,7 @@ class AF:
                 nuevos_estados_finales.add(estado)
 
         self.estados_finales = nuevos_estados_finales
+        self._cambiar_nombre_complementario()
 
     # Completo
     def imprimir(self):
