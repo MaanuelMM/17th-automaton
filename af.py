@@ -191,11 +191,16 @@ class AF:
                 self.transiciones[estado].pop('')
 
     # Completo
-    def convertir_a_afd(self):
+    def _convertir_a_afd(self):
         """Convierte el autómata finito a uno determinista."""
         self._eliminar_transiciones_vacias()
         self._automata_accesible_determinista()
         self._eliminar_estados_no_coaccesibles()
+
+    # Incompleto
+    def convertir_17th_automaton(self):
+        """Convierte el autómata finito a uno como indica el enunciado del tema 17."""
+        self._convertir_a_afd()
 
     # Completo
     def imprimir(self):

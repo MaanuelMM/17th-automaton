@@ -3,7 +3,7 @@
 #               Eduardo Marqués De La Fuente
 #               José Carlos Gago Hernández
 # Created:      2019/02/27
-# Last update:  2019/03/09
+# Last update:  2019/03/11
 
 from af import AF
 
@@ -120,8 +120,8 @@ def leer_y_convertir_automata():
     automata_finito = automata(estados, alfabeto, transiciones, estado_inicial, estados_finales)
     print("-----------------------------------------------ANTES------------------------------------------------")
     automata_finito.imprimir()
-    automata_finito.convertir_a_afd()
     print("----------------------------------------------DESPUÉS-----------------------------------------------")
+    automata_finito.convertir_17th_automaton()
     automata_finito.imprimir()
 
 def menu():
