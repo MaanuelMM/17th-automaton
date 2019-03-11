@@ -71,13 +71,21 @@ if __name__ == "__main__":
     primer_AF = primer_AF()
     segundo_AF = segundo_AF()
 
-    # Realizamos lo que pide el enunciado
-    primer_AF.convertir_17th_automaton()
-    segundo_AF.convertir_17th_automaton()
+    # Mostramos la creación de los autómatas anteriores
+    print("Primer AF:")
+    primer_AF.imprimir()
+    print()
     
-    # Autómatas resultantes de lo que pide el enunciado
+    print("Segundo AF:")
+    segundo_AF.imprimir()
+    print()
+
+    # Realizamos lo que pide el enunciado y mostramos lo que sucede
+    primer_AF.convertir_a_17th_automaton()
     print("Primer AF:")
     primer_AF.imprimir()
 
+    print()
+    segundo_AF.convertir_a_17th_automaton()
     print("Segundo AF:")
     segundo_AF.imprimir()
