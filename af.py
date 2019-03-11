@@ -3,7 +3,7 @@
 #               Eduardo Marqués De La Fuente
 #               José Carlos Gago Hernández
 # Created:      2019/02/28
-# Last update:  2019/03/09
+# Last update:  2019/03/11
 """Clases y métodos para trabajar con autómatas finitos."""
 
 import copy
@@ -72,7 +72,8 @@ class AF:
                 for entrada in self.alfabeto:
                     próximos_estados = self._obtener_próximos_estados_de_conjunto(
                         estados_cola, entrada)
-                    transiciones_nuevas[estado_cola][entrada] = (
+                    transiciones_nuevas[estado_cola][entrada] = set()
+                    transiciones_nuevas[estado_cola][entrada].add(
                         AF._hacer_string_de_conjunto_estados(próximos_estados))
                     cola_estados.put(próximos_estados)
         
@@ -81,7 +82,6 @@ class AF:
         self.transiciones = transiciones_nuevas
         self.estado_inicial = estado_inicial_nuevo
         self.estados_finales = estados_finales_nuevos
-
 
     # Completo
     def _obtener_coaccesibles_de_un_estado(self, estado):
@@ -107,6 +107,8 @@ class AF:
         """Obtiene los estados co-accesibles del autómata finito."""
         # Declaramos e inicializamos variables a utilizar
         estados_visitados = self.estados_finales.copy()
+        if('{}' in self.estados):
+            estados_visitados.add('{}')
         set_estados = set()
         for estado_final in self.estados_finales:
             for estado_coaccesible in self._obtener_coaccesibles_de_un_estado(estado_final):
@@ -142,6 +144,8 @@ class AF:
                     for estado_accesible in self.transiciones[estado][entrada]:
                         if(estado_accesible not in self.estados):
                             transiciones_nuevo[estado][entrada].remove(estado_accesible)
+                            if('{}' in self.estados and not transiciones_nuevo[estado][entrada]):
+                                transiciones_nuevo[estado][entrada].add('{}')
 
         self.transiciones = transiciones_nuevo
 
@@ -186,13 +190,12 @@ class AF:
             if('' in self.transiciones[estado]):
                 self.transiciones[estado].pop('')
 
-    # Incompleto
+    # Completo
     def convertir_a_afd(self):
         """Convierte el autómata finito a uno determinista."""
         self._eliminar_transiciones_vacias()
-        # DUDA: no sé si hay que eliminar los no co-accesibles antes o después
-        self._eliminar_estados_no_coaccesibles()
         self._automata_accesible_determinista()
+        self._eliminar_estados_no_coaccesibles()
 
     # Completo
     def imprimir(self):
