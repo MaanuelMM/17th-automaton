@@ -3,10 +3,10 @@
 #               Eduardo Marqués De La Fuente
 #               José Carlos Gago Hernández
 # Created:      2019/03/11
-# Last update:  2019/03/11
+# Last update:  2019/03/12
 
 from af import AF
-
+from main import banner
 
 def primer_AF():
     return AF(
@@ -65,27 +65,28 @@ def segundo_AF():
         estados_finales={'F'}
     )
 
+def convertir_y_mostrar_automata(automata):
+    # Mostramos la creación del autómata finito
+    print("\nANTES:")
+    automata.imprimir()
+    # Realizamos lo que pide el enunciado y mostramos lo que sucede con el autómata
+    automata.convertir_a_17th_automaton()
+    print("\n\nDESPUÉS:")
+    automata.imprimir()    
+
 
 if __name__ == "__main__":
-    # Creamos los autómatas finitos
+    banner()
+    # Creamos los dos autómatas finitos de ejemplo
     primer_AF = primer_AF()
     segundo_AF = segundo_AF()
 
-    # Mostramos la creación de los autómatas anteriores
-    print("Primer AF:")
-    primer_AF.imprimir()
-    print()
+    # Mostramos la creación del primer autómata finito
+    print("\n\n\n---------------------------------------------PRIMER AF----------------------------------------------")
+    convertir_y_mostrar_automata(primer_AF)
+    print("\n----------------------------------------------------------------------------------------------------")
     
-    print("Segundo AF:")
-    segundo_AF.imprimir()
-    print()
-
-    # Realizamos lo que pide el enunciado y mostramos lo que sucede
-    primer_AF.convertir_a_17th_automaton()
-    print("Primer AF:")
-    primer_AF.imprimir()
-
-    print()
-    segundo_AF.convertir_a_17th_automaton()
-    print("Segundo AF:")
-    segundo_AF.imprimir()
+    # Mostramos la creación del segundo autómata finito
+    print("\n\n---------------------------------------------SEGUNDO AF---------------------------------------------")
+    convertir_y_mostrar_automata(segundo_AF)
+    print("\n----------------------------------------------------------------------------------------------------")

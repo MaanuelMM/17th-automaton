@@ -3,7 +3,7 @@
 #               Eduardo Marqués De La Fuente
 #               José Carlos Gago Hernández
 # Created:      2019/02/28
-# Last update:  2019/03/11
+# Last update:  2019/03/12
 """Clases y métodos para trabajar con autómatas finitos."""
 
 import copy
@@ -261,11 +261,11 @@ class AF:
     # Completo
     def imprimir(self):
         """Imprime el autómata finito para poder ser visualizado."""
-        print("Estados:",self.estados)
-        print("Alfabeto:",self.alfabeto)
-        print("Transiciones:",self.transiciones)
-        print("Estado inicial:",self.estado_inicial)
-        print("Estados finales:",self.estados_finales)
+        print("\nEstados:",self.estados)
+        print("\nAlfabeto:",self.alfabeto)
+        print("\nTransiciones:",self.transiciones)
+        print("\nEstado inicial:",self.estado_inicial)
+        print("\nEstados finales:",self.estados_finales)
 
     # Completo
     def copy(self):
