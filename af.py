@@ -240,7 +240,7 @@ class AF:
         self._cambiar_nombre_complementario()
 
     # Completo
-    def _multiplicar_con_su_complementario(self):
+    def _concatenar_con_su_complementario(self):
         """Multiplica un autómata finito determinista completo con su complementario."""
         complementario = self.copy()
         complementario._convertir_a_complementario()
@@ -249,13 +249,13 @@ class AF:
         for estado_final in self.estados_finales:
             self.transiciones[estado_final][''] = set()
             self.transiciones[estado_final][''].add(complementario.estado_inicial)
-        self.estados_finales.update(complementario.estados_finales)
+        self.estados_finales = complementario.estados_finales
 
     # Completo
     def convertir_a_17th_automaton(self):
         """Convertir el autómata dado a uno que cumpla con el enunciado del tema 17."""
         self._convertir_a_afd()
-        self._multiplicar_con_su_complementario()
+        self._concatenar_con_su_complementario()
         self._eliminar_transiciones_vacias()
 
     # Completo
