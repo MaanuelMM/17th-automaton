@@ -226,7 +226,7 @@ class AF:
         self.estados_finales = AF._cambiar_nombre_complementario_conjunto(self.estados_finales, texto)
 
     # Completo
-    def _convertir_a_complementario(self):
+    def _convertir_a_complementario(self, cambiar_nombre=False):
         """Convierte un autómata finito determinista completo a uno complementario.
         
         NOTA: DEBE SER UN AUTÓMATA FINITO DETERMINISTA Y COMPLETO."""
@@ -237,25 +237,26 @@ class AF:
                 nuevos_estados_finales.add(estado)
 
         self.estados_finales = nuevos_estados_finales
-        self._cambiar_nombre_complementario('-compl.')
+        if(cambiar_nombre):
+            self._cambiar_nombre_complementario('-compl.')
 
     # Completo
-    def _concatenar_con_su_complementario(self):
-        """Multiplica un autómata finito determinista completo con su complementario."""
-        complementario = self.copy()
-        complementario._convertir_a_complementario()
-        self.estados.update(complementario.estados)
-        self.transiciones.update(complementario.transiciones)
+    def _concatenar_con_su_complementario(self, automata_finito):
+        """Concatena un autómata finito con otro pasado como argumento."""
+        self.estados.update(automata_finito.estados)
+        self.transiciones.update(automata_finito.transiciones)
         for estado_final in self.estados_finales:
             self.transiciones[estado_final][''] = set()
-            self.transiciones[estado_final][''].add(complementario.estado_inicial)
-        self.estados_finales = complementario.estados_finales
+            self.transiciones[estado_final][''].add(automata_finito.estado_inicial)
+        self.estados_finales = automata_finito.estados_finales
 
     # Completo
     def convertir_a_17th_automaton(self):
         """Convertir el autómata dado a uno que cumpla con el enunciado del tema 17."""
         self._convertir_a_afd()
-        self._concatenar_con_su_complementario()
+        complementario = self.copy()
+        complementario._convertir_a_complementario(True)
+        self._concatenar_con_su_complementario(complementario)
         self._eliminar_transiciones_vacias()
 
     # Completo
