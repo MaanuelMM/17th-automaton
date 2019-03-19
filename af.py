@@ -3,7 +3,7 @@
 #               Eduardo Marqués De La Fuente
 #               José Carlos Gago Hernández
 # Created:      2019/02/28
-# Last update:  2019/03/12
+# Last update:  2019/03/19
 """Clases y métodos para trabajar con autómatas finitos."""
 
 import copy
@@ -237,7 +237,7 @@ class AF:
                 nuevos_estados_finales.add(estado)
 
         self.estados_finales = nuevos_estados_finales
-        self._cambiar_nombre_complementario()
+        self._cambiar_nombre_complementario('-compl.')
 
     # Completo
     def _concatenar_con_su_complementario(self):
@@ -260,12 +260,17 @@ class AF:
 
     # Completo
     def imprimir(self):
-        """Imprime el autómata finito para poder ser visualizado."""
-        print("\nEstados:",self.estados)
-        print("\nAlfabeto:",self.alfabeto)
-        print("\nTransiciones:",self.transiciones)
+        """Imprime el autómata finito ordenado para poder ser visualizado."""
+        print("\nEstados:",sorted(self.estados))
+        print("\nAlfabeto:",sorted(self.alfabeto))
+        print("\nTransiciones:")
+        for estado in sorted(self.transiciones):
+            print("  " + estado + ":")
+            for entrada in sorted(self.transiciones[estado]):
+                print("    " + entrada + ": " + str(sorted(self.transiciones[estado][entrada])))
+            print()
         print("\nEstado inicial:",self.estado_inicial)
-        print("\nEstados finales:",self.estados_finales)
+        print("\nEstados finales:",sorted(self.estados_finales))
 
     # Completo
     def copy(self):
