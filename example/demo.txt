@@ -1,0 +1,301 @@
+Copyright © 2019 Manuel Martín Malagón, Eduardo Marqués De La Fuente and José Carlos Gago Hernández
+Released under the MIT license
+
+ _____________   __  .__                             __                         __                 
+/_   \______  \_/  |_|  |__           _____   __ ___/  |_  ____   _____ _____ _/  |_  ____   ____  
+ |   |   /    /\   __\  |  \   ______ \__  \ |  |  \   __\/  _ \ /     \\__  \\   __\/  _ \ /    \ 
+ |   |  /    /  |  | |   Y  \ /_____/  / __ \|  |  /|  | (  <_> )  Y Y  \/ __ \|  | (  <_> )   |  \
+ |___| /____/   |__| |___|  /         (____  /____/ |__|  \____/|__|_|  (____  /__|  \____/|___|  /
+                          \/               \/                         \/     \/                 \/ 
+
+
+
+
+---------------------------------------------PRIMER AF----------------------------------------------
+
+ANTES:
+
+Estados: ['q0', 'q1', 'q2', 'q3', 'q4']
+
+Alfabeto: ['a', 'b', 'c']
+
+Transiciones:
+  q0:
+    a: ['q2']
+    b: ['q1', 'q2']
+
+  q1:
+    a: ['q1']
+    b: ['q1']
+    c: ['q1', 'q2']
+
+  q2:
+    a: ['q3']
+    b: ['q2', 'q3']
+
+  q3:
+    a: ['q4']
+    b: ['q2']
+
+  q4:
+    c: ['q2']
+
+
+Estado inicial: q0
+
+Estados finales: ['q4']
+
+
+DESPUÉS:
+
+Estados: ['{q0}', '{q0}-compl.', '{q1,q2,q3}', '{q1,q2,q3}-compl.', '{q1,q2}', '{q1,q2}-compl.', '{q1,q3,q4}', '{q1,q3,q4}-compl.', '{q1,q3}', '{q1,q3}-compl.', '{q1,q4}', '{q1,q4}-compl.', '{q1}', '{q1}-compl.', '{q2,q3}', '{q2,q3}-compl.', '{q2}', '{q2}-compl.', '{q3,q4}', '{q3,q4}-compl.', '{q3}', '{q3}-compl.', '{q4}', '{q4}-compl.', '{}', '{}-compl.']
+
+Alfabeto: ['a', 'b', 'c']
+
+Transiciones:
+  {q0}:
+    a: ['{q2}']
+    b: ['{q1,q2}']
+    c: ['{}']
+
+  {q0}-compl.:
+    a: ['{q2}-compl.']
+    b: ['{q1,q2}-compl.']
+    c: ['{}-compl.']
+
+  {q1,q2,q3}:
+    a: ['{q1,q3,q4}']
+    b: ['{q1,q2,q3}']
+    c: ['{q1,q2}']
+
+  {q1,q2,q3}-compl.:
+    a: ['{q1,q3,q4}-compl.']
+    b: ['{q1,q2,q3}-compl.']
+    c: ['{q1,q2}-compl.']
+
+  {q1,q2}:
+    a: ['{q1,q3}']
+    b: ['{q1,q2,q3}']
+    c: ['{q1,q2}']
+
+  {q1,q2}-compl.:
+    a: ['{q1,q3}-compl.']
+    b: ['{q1,q2,q3}-compl.']
+    c: ['{q1,q2}-compl.']
+
+  {q1,q3,q4}:
+    a: ['{q1,q4}', '{q2}-compl.']
+    b: ['{q1,q2}', '{q1,q2}-compl.']
+    c: ['{q1,q2}', '{}-compl.']
+
+  {q1,q3,q4}-compl.:
+    a: ['{q1,q4}-compl.']
+    b: ['{q1,q2}-compl.']
+    c: ['{q1,q2}-compl.']
+
+  {q1,q3}:
+    a: ['{q1,q4}']
+    b: ['{q1,q2}']
+    c: ['{q1,q2}']
+
+  {q1,q3}-compl.:
+    a: ['{q1,q4}-compl.']
+    b: ['{q1,q2}-compl.']
+    c: ['{q1,q2}-compl.']
+
+  {q1,q4}:
+    a: ['{q1}', '{q2}-compl.']
+    b: ['{q1,q2}-compl.', '{q1}']
+    c: ['{q1,q2}', '{}-compl.']
+
+  {q1,q4}-compl.:
+    a: ['{q1}-compl.']
+    b: ['{q1}-compl.']
+    c: ['{q1,q2}-compl.']
+
+  {q1}:
+    a: ['{q1}']
+    b: ['{q1}']
+    c: ['{q1,q2}']
+
+  {q1}-compl.:
+    a: ['{q1}-compl.']
+    b: ['{q1}-compl.']
+    c: ['{q1,q2}-compl.']
+
+  {q2,q3}:
+    a: ['{q3,q4}']
+    b: ['{q2,q3}']
+    c: ['{}']
+
+  {q2,q3}-compl.:
+    a: ['{q3,q4}-compl.']
+    b: ['{q2,q3}-compl.']
+    c: ['{}-compl.']
+
+  {q2}:
+    a: ['{q3}']
+    b: ['{q2,q3}']
+    c: ['{}']
+
+  {q2}-compl.:
+    a: ['{q3}-compl.']
+    b: ['{q2,q3}-compl.']
+    c: ['{}-compl.']
+
+  {q3,q4}:
+    a: ['{q2}-compl.', '{q4}']
+    b: ['{q1,q2}-compl.', '{q2}']
+    c: ['{q2}', '{}-compl.']
+
+  {q3,q4}-compl.:
+    a: ['{q4}-compl.']
+    b: ['{q2}-compl.']
+    c: ['{q2}-compl.']
+
+  {q3}:
+    a: ['{q4}']
+    b: ['{q2}']
+    c: ['{}']
+
+  {q3}-compl.:
+    a: ['{q4}-compl.']
+    b: ['{q2}-compl.']
+    c: ['{}-compl.']
+
+  {q4}:
+    a: ['{q2}-compl.', '{}']
+    b: ['{q1,q2}-compl.', '{}']
+    c: ['{q2}', '{}-compl.']
+
+  {q4}-compl.:
+    a: ['{}-compl.']
+    b: ['{}-compl.']
+    c: ['{q2}-compl.']
+
+  {}:
+    a: ['{}']
+    b: ['{}']
+    c: ['{}']
+
+  {}-compl.:
+    a: ['{}-compl.']
+    b: ['{}-compl.']
+    c: ['{}-compl.']
+
+
+Estado inicial: {q0}
+
+Estados finales: ['{q0}-compl.', '{q1,q2,q3}-compl.', '{q1,q2}-compl.', '{q1,q3}-compl.', '{q1}-compl.', '{q2,q3}-compl.', '{q2}-compl.', '{q3}-compl.', '{}-compl.']
+
+----------------------------------------------------------------------------------------------------
+
+
+---------------------------------------------SEGUNDO AF---------------------------------------------
+
+ANTES:
+
+Estados: ['A', 'B', 'C', 'D', 'E', 'F', 'S']
+
+Alfabeto: ['a', 'b', 'c']
+
+Transiciones:
+  A:
+
+  B:
+    b: ['A', 'B', 'F']
+
+  C:
+
+  D:
+    a: ['C']
+    c: ['E']
+
+  E:
+    b: ['F']
+
+  F:
+
+  S:
+    a: ['A', 'D', 'F']
+    b: ['C', 'D', 'F']
+
+
+Estado inicial: S
+
+Estados finales: ['F']
+
+
+DESPUÉS:
+
+Estados: ['{A,D,F}', '{A,D,F}-compl.', '{C,D,F}', '{C,D,F}-compl.', '{E}', '{E}-compl.', '{F}', '{F}-compl.', '{S}', '{S}-compl.', '{}', '{}-compl.']
+
+Alfabeto: ['a', 'b', 'c']
+
+Transiciones:
+  {A,D,F}:
+    a: ['{A,D,F}-compl.', '{}']
+    b: ['{C,D,F}-compl.', '{}']
+    c: ['{E}', '{}-compl.']
+
+  {A,D,F}-compl.:
+    a: ['{}-compl.']
+    b: ['{}-compl.']
+    c: ['{E}-compl.']
+
+  {C,D,F}:
+    a: ['{A,D,F}-compl.', '{}']
+    b: ['{C,D,F}-compl.', '{}']
+    c: ['{E}', '{}-compl.']
+
+  {C,D,F}-compl.:
+    a: ['{}-compl.']
+    b: ['{}-compl.']
+    c: ['{E}-compl.']
+
+  {E}:
+    a: ['{}']
+    b: ['{F}']
+    c: ['{}']
+
+  {E}-compl.:
+    a: ['{}-compl.']
+    b: ['{F}-compl.']
+    c: ['{}-compl.']
+
+  {F}:
+    a: ['{A,D,F}-compl.', '{}']
+    b: ['{C,D,F}-compl.', '{}']
+    c: ['{}', '{}-compl.']
+
+  {F}-compl.:
+    a: ['{}-compl.']
+    b: ['{}-compl.']
+    c: ['{}-compl.']
+
+  {S}:
+    a: ['{A,D,F}']
+    b: ['{C,D,F}']
+    c: ['{}']
+
+  {S}-compl.:
+    a: ['{A,D,F}-compl.']
+    b: ['{C,D,F}-compl.']
+    c: ['{}-compl.']
+
+  {}:
+    a: ['{}']
+    b: ['{}']
+    c: ['{}']
+
+  {}-compl.:
+    a: ['{}-compl.']
+    b: ['{}-compl.']
+    c: ['{}-compl.']
+
+
+Estado inicial: {S}
+
+Estados finales: ['{E}-compl.', '{S}-compl.', '{}-compl.']
+
+----------------------------------------------------------------------------------------------------
