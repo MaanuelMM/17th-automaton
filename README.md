@@ -44,6 +44,9 @@ Given a finite automaton (*A*), it is asked to write a finite automaton (*A’*)
 * **First automaton**
 ![First automaton](/example/img/first_automaton.png)
 
+ER1: 
+a(a(b+ac))(aa+bb(a((c+b+ac)(a(b+ac))bba)(a+(c+b+ac)(a(b+ac))(a+bb)a+$)+a))+bc((a+(b+a((c+b)ca)((c+b)cb+a((c+(b+a)(a+b)c)ca((c+b)ca)a)(c+(b+a)(a+b)c)c(b+a((c+b)ca)(c+b)cb)))(b+cc(b+a((c+b)ca)((c+b)cb+a((c+(b+a)(a+b)c)ca((c+b)ca)a)(c+(b+a)(a+b)c)c(b+a((c+b)ca)(c+b)cb))))cca)((c+b)ca)(a+a((c+(b+a)(a+b)c)ca((c+b)ca)a)($+(c+(b+a)(a+b)c)ca((c+b)ca)a))+(b+a((c+b)ca)((c+b)cb+a((c+(b+a)(a+b)c)ca((c+b)ca)a)(c+(b+a)(a+b)c)c(b+a((c+b)ca)(c+b)cb)))(b+cc(b+a((c+b)ca)((c+b)cb+a((c+(b+a)(a+b)c)ca((c+b)ca)a)(c+(b+a)(a+b)c)c(b+a((c+b)ca)(c+b)cb))))(a((c+b+(a+(c+b)ca((c+b)ca)a)((c+(b+a)(a+b)c)ca((c+b)ca)a)(c+(b+a)(a+b)c))c(b+a((c+b)ca)(c+b)cb)(b+cc(b+a((c+b)ca)((c+b)cb+a((c+(b+a)(a+b)c)ca((c+b)ca)a)(c+(b+a)(a+b)c)c(b+a((c+b)ca)(c+b)cb))))a)(a+(c+b)ca((c+b)ca)a+(a+(c+b)ca((c+b)ca)a)((c+(b+a)(a+b)c)ca((c+b)ca)a)($+(c+(b+a)(a+b)c)ca((c+b)ca)a)+(c+b+(a+(c+b)ca((c+b)ca)a)((c+(b+a)(a+b)c)ca((c+b)ca)a)(c+(b+a)(a+b)c))c(b+a((c+b)ca)(c+b)cb)(b+cc(b+a((c+b)ca)((c+b)cb+a((c+(b+a)(a+b)c)ca((c+b)ca)a)(c+(b+a)(a+b)c)c(b+a((c+b)ca)(c+b)cb))))(cca((c+b)ca)(a+a((c+(b+a)(a+b)c)ca((c+b)ca)a)($+(c+(b+a)(a+b)c)ca((c+b)ca)a))+a)+$)+a))
+
 * **Second automaton**
 ![Second automaton](/example/img/second_automaton.png)
 
